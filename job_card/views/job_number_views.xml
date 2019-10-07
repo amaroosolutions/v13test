@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="act_job_card_2_sale_order" model="ir.actions.act_window">
+        <field name="name">Sale Order</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('job_number_id', '=',active_id)]</field>
+    </record>
+
+    <!-- kanban view -->
+            <record id="job_number_kanban_view" model="ir.ui.view">
+            <field name="name">job.number.kanban</field>
+            <field name="model">job.number</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state_progress" class="o_kanban_small_column o_opportunity_kanban" >
+                    <field name="state_progress" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_content oe_kanban_global_click" >
+                                <div class="oe_kanban_content">
+                                    <div>
+                                        <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                    </div>
+                                    <div>
+                                        <strong class="o_kanban_record_title">Serial Number: </strong>
+                                            <field name="serial_id"/>
+                                    </div>
+                                    <div>
+                                        <strong class="o_kanban_record_title">OEM: </strong><field name="partner_id"/>
+                                    </div>
+                                    <div>
+                                        <strong class="o_kanban_record_title">Model: </strong><field name="model_id"/>
+                                    </div>
+                                    <div>
+                                        <strong class="o_kanban_record_title">Model Type: </strong><field name="model_type"/>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    <!-- Tree View -->
+    <record id="view_job_number_tree" model="ir.ui.view">
+        <field name="name">job.number.tree</field>
+        <field name="model">job.number</field>
+        <field name="arch" type="xml">
+            <tree string="B2B Jobs">
+                <field name="name" />
+                <field name="serial_id" />
+                <field name="partner_id" />
+                <field name="model_id" />               
+            </tree>
+
+        </field>
+    </record>
+    <!--Form View -->
+    <record id="view_job_number_form" model="ir.ui.view">
+        <field name="name">job.number.form</field>
+        <field name="model">job.number</field>
+        <field name="arch" type="xml">
+            <form string="B2B Jobs" duplicate="0">
+                <header>
+                    <button  string="Set Job To Complete" name="button_set_job_complete"  class="oe_highlight" type="object" attrs="{'invisible': ['|',('state', '=', 'done'),('show_completed','=',False)]}"/>
+                    <field name="state_progress" widget="statusbar" options="{'clickable': '1'}" attrs="{'invisible': [('state_progress', '=', 'complete')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="progress,done"/>
+                </header>    
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                         <button type="action" name="%(job_card.act_job_card_2_sale_order)d" class="oe_stat_button" icon="fa-usd">
+                            <field name="sale_order_count" widget="statinfo" string="Sale Order" />
+                         </button>   
+                    </div>
+                    <h1>
+                        <field name="name" readonly="1" nolabel="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="show_completed" invisible="1" />
+                            <field name="date_of_receipt" readonly="1" />
+                            <field name="employee_id" />
+                            <field name="other_ref_1" />
+                            <field name="other_ref_2" />
+                            <field name="nxstage_case_no" attrs="{'invisible': [('is_nxstage_device', '=', False)]}" />
+                        </group>
+                        <group>
+                            <field name="serial_id" required="1" options="{'no_create': True}" />
+                            <field name="partner_id" />
+                            <field name="model_id" />
+                            <field name="model_type" />
+                            <field name="is_nxstage_device" invisible="1" />
+                            <field name="is_philips_device" invisible="1" />
+                            <field name="reason_id" options="{'no_create': True}" />
+                        </group>
+                        <group>
+                            <field name="service_sheet" />
+                            <field name="job_card_billing" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="further_details" />
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Goods In Inspection">
+                            <group>
+                                <group>
+                                    <field name="inspector_name_id" options="{'no_create': True}" />
+                                    <field name="date_goods_in_inspection" />
+                                    <field name="time" />
+                                </group>
+                                <group>
+                                    <field name="comments" />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Decontamination">
+                            <group>
+                                <group>
+                                    <field name="cleaners_name_id" options="{'no_create': True}" />
+                                    <field name="date_of_cleaning" />
+                                    <field name="time_taken" />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="QC Checks">
+                            <group>
+                                <group>
+                                    <field name="device_clean_and_free_from_visible_damage_" />
+                                    <field name="all_required_accessories_paperwork_present" />
+                                    <field name="correct_device_serial_number_on_service_sheet" />
+                                    <field name="engineer_name_date_on_service_sheet" />
+                                    <field name="ifs_quality_assurance" attrs="{'invisible': [('is_nxstage_device', '=', False)]}" />
+                                </group>
+                                <group>
+                                    <field name="checker" options="{'no_create': True}" />
+                                    <field name="checker_2" attrs="{'invisible': [('is_nxstage_device', '=', False)]}" options="{'no_create': True}" />
+                                    <field name="date" />
+                                    <field name="qc_time_taken" />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Accesories">
+                            <group>
+                                <group>
+                                    <field name="accessories_sign_off" options="{'no_create': True}" />
+                                </group>
+                            </group>
+                            <field name="accessories_ids">
+                                <tree editable="bottom">
+                                    <field name="accessories_id" />
+                                    <field name="quantity" />
+                                    <field name="received" />
+                                    <field name="returned" />
+                                    <field name="comments" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Dispatch">
+                            <group>
+                                <group>
+                                    <field name="dispatcher_name_id" options="{'no_create': True}" />
+                                    <field name="dispatch_date" />
+                                    <field name="time_taken_to_pack" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <page string="Pre-Flight" attrs="{'invisible': [('is_nxstage_device', '=', False)]}">
+                            <group>
+                                <group>
+                                    <field name="rohs_device" />
+                                    <field name="out_of_box_falure" />
+                                </group>
+                                <group>
+                                    <field name="reason_id" />
+                                    <field name="swap_summery" />
+                                </group>
+                                <group>
+                                    <field name="alleged_fault_code" />
+                                    <field name="actual_fault_code" />
+                                    <field name="alleged_quality_code" />
+                                    <field name="actual_quality_code" />
+                                </group>
+                                <group>
+                                    <field name="return_reason_upheld" />
+                                    <field name="supporting_details" />
+                                    <field name="engineer_id" options="{'no_create': True}" />
+                                    <field name="date_2" />
+                                </group>
+                                <group string="Additional Testing">
+                                    <field name="additional_testing" />
+                                    <field name="name_id" options="{'no_create': True}" />
+                                    <field name="date_3" />
+                                </group>
+                                <group string="Previous Jobs">
+                                    <field name="previous_jobs_id" domain="[('serial_id','=',serial_id)]" options="{'no_create': True}" />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Parts Added Into Device#" attrs="{'invisible': [('is_philips_device', '=', False)]}">
+                            <field name="philips_parts_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="description" />
+                                    <field name="quantity" />
+                                    <field name="date" />
+                                    <field name="user_id" options="{'no_create': True}" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Parts Added Into Device*" attrs="{'invisible': [('is_philips_device', '=', True)]}">
+                            <group>
+                                <group>
+                                    <field name="warehouse_id" required="1" options="{'no_create': True}"/>
+                                </group>
+                            </group>
+                            <field name="oem_parts_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="description" />
+                                    <field name="quantity" />
+                                    <field name="date" />
+                                    <field name="user_id" options="{'no_create': True}" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Testing Complete">
+                            <group>
+                                <group>
+                                    <field name="engineer_id" options="{'no_create': True}" />
+                                    <field name="date_1" />
+                                    <field name="result" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <page string="Timeings">
+                            <group>
+                                <group string="Workshop Total Hours">
+                                    <field name="hours" />
+                                </group>
+                                <group string="Warehouse Total Hours">
+                                    <field name="hours_wh" />
+                                </group>
+                                <group string="Planned vs Actual">
+                                    <field name="planned_hours" />
+                                    <field name="total_hours" />
+                                </group>
+                                <group string="Job Duration">
+                                    <field name="total_no_days" />
+                                    <field name="total_waiting_day"/>
+                                    <field name="actual_days" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group string="Delays"/>
+                    <field name="delay_reason_line_ids">
+                        <tree editable="bottom">
+                            <field name="dealy_reason_id" />
+                            <field name="start_date" />
+                            <field name="end_date" />
+                            <field name="comments" />
+                            <field name="day_waiting" sum="Waiting Days"/>
+                            <field name="user_id" options="{'no_create': True}"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!-- Menu action-->
+    <record id="job_number_action" model="ir.actions.act_window">
+        <field name="name">Job Number</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">job.number</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    <!-- Top menu item -->
+    <menuitem id="job_number_menu" name="B2B Job Card" web_icon="job_card,static/description/icon.png" />
+    <menuitem id="job_number_sub_menu" parent="job_number_menu" name="Job Number" action="job_number_action" />
+</odoo>

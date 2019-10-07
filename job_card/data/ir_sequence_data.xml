@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for job.number -->
+        <record id="seq_job_card" model="ir.sequence">
+            <field name="name">B2B Jobs</field>
+            <field name="code">job.number</field>
+            <field name="prefix">JOB/</field>
+            <field name="padding">6</field>
+        </record>
+
+    </data>
+</odoo>

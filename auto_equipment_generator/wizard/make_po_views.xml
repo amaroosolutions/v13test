@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_make_po_wiz" model="ir.ui.view">
+        <field name="name">make.po.wiz</field>
+        <field name="model">make.po.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Invoice Sales Order">
+                <p class="oe_grey">
+                    Confirm Purchase order creation
+                </p>
+                <group>
+                    <field name="maintenance_ids" nolabel="1">
+                        <tree create="0">
+                            <field name="name"/>
+                            <field name="maintenance_auto_id"/>
+                            <field name="subcontract"/>
+                            <field name="partner_id"/>
+                            <field name="product_id"/>
+                            <field name="request_date" groups="base.group_no_one"/>
+                            <field name="owner_user_id"/>
+                            <field name="user_id"/>
+                            <field name="category_id" groups="maintenance.group_equipment_manager"/>
+                            <field name="stage_id"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="make_po" string="Create PO" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_make_po_wiz_action" model="ir.actions.act_window">
+        <field name="name">Create PO</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">make.po.wiz</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_make_po_wiz"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="maintenance.model_maintenance_request" />
+    </record>
+
+</odoo>

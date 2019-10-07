@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_testing_note">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="job_card.external_layout_engineer_testing">
+                    <div class="page" style="border: 1px solid;">
+                        <div style="background:#e0e0e0;border-bottom: 1px solid; margin-bottom: 111.5%;">
+                            <h3 class="ml-1">TESTING ENGINEER NOTES</h3>
+                            <p class="text-justify ml-1 mr-1">This section is to be used if it becomes necessary to make notes during Testing. These notes will then be stored with the device service report. However, this  is <u>NOT</u> a substitute for the device service report. It is not requirement to record notes on this page, but if not used please strike through to indicate N/A.</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <template id="external_layout_engineer_testing">
+        <div class="header">
+            <div class="row">
+                <div class="col-8">
+                    <p>Appendix 5 ver 9:Wl001-To be kept with device at all times.<br />
+                  Date of Receipt: <span t-field="o.date_of_receipt" /></p>
+                </div>
+                <div class="col-4 text-right" name="right_box" >
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:40px;" alt="Barcode" /><span t-field="o.name"  />
+                </div>
+            </div>
+        </div>
+        <t t-raw="0" />
+        <div class="footer" style="margin-top:0px;padding-top:0px;">
+            <div class="text-center" style="background-color:#e0e0e0; border-left:1px solid;border-right:1px solid;">
+                <h5 style="margin-bottom:0;margin-top:0;padding-top:0;">SIGN-OFF BY ENGINEER WHO HAS COMPLETED TESTING</h5>
+            </div>
+            <table class="table">
+                <tr>
+                    <td style="border:1px solid;width:10%;vertical-align: middle;">ENGINEER NAME</td>
+                    <td style="border:1px solid;width:25%"></td>
+                    <td style="border:1px solid;width:10%;vertical-align: middle;">ENGINEER SIGNATURE</td>
+                    <td style="border:1px solid;width:25%"></td>
+                    <td style="border:1px solid;width:10%;vertical-align: middle;">DATE</td>
+                    <td style="border:1px solid;width:20%"></td>
+                </tr>
+            </table>
+        </div>
+    </template>
+</odoo>

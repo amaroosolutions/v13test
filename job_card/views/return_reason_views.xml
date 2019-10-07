@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_reason_return_tree" model="ir.ui.view">
+        <field name="name">reason.return.tree</field>
+        <field name="model">reason.return</field>
+        <field name="arch" type="xml">
+            <tree string="Return Reasons" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Form View -->
+    <record id="view_reason_return_form" model="ir.ui.view">
+        <field name="name">reason.return.form</field>
+        <field name="model">reason.return</field>
+        <field name="arch" type="xml">
+            <form string="Return Reasons">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menu action-->
+    <record id="return_reason_action" model="ir.actions.act_window">
+        <field name="name">Return Reasons</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reason.return</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem id="return_reason_sub_menu" parent="job_number_menu" name="Return Reasons" action="return_reason_action" />
+</odoo>

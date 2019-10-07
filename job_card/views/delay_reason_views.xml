@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_delay_reason_tree" model="ir.ui.view">
+        <field name="name">delay.reason.tree</field>
+        <field name="model">delay.reason</field>
+        <field name="arch" type="xml">
+            <tree string="Delay Reason">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Form View -->
+    <record id="view_delay_reason_form" model="ir.ui.view">
+        <field name="name">delay.reason.form</field>
+        <field name="model">delay.reason</field>
+        <field name="arch" type="xml">
+            <form string="Delay Reason">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menu action-->
+    <record id="delay_reason_action" model="ir.actions.act_window">
+        <field name="name">Delay Reason</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">delay.reason</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem id="delay_reason_sub_menu" parent="job_number_menu" name="Delay Reason" action="delay_reason_action" />
+</odoo>

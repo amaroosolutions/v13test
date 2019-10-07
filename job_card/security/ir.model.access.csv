@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_job_number,access_job_number,model_job_number,base.group_user,1,1,1,1
+access_accessories,access_accessories,model_accessories_accessories,base.group_user,1,1,1,1
+access_accessories_line,access_accessories_line,model_accessories_line,base.group_user,1,1,1,1
+access_reason_return,access_reason_return,model_reason_return,base.group_user,1,1,1,1
+access_philips_parts,access_philips_parts,model_philips_parts,base.group_user,1,1,1,1
+access_parts_required,access_parts_required,model_parts_required,base.group_user,1,1,1,1
+access_oem_parts_line,access_oem_parts_line,model_oem_parts_line,base.group_user,1,1,1,1
+access_philips_parts_line,access_philips_parts_line,model_philips_parts_line,base.group_user,1,1,1,1 
+access_delay_reason_line,access_delay_reason_line,model_delay_reason_line,base.group_user,1,1,1,1
+access_delay_reason,access_delay_reason,model_delay_reason,base.group_user,1,1,1,1

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- equiment : views -->
+    <record id="auto_equipment_generator_hr_equipment_view_form" model="ir.ui.view">
+        <field name="name">equipment.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <group name="maintenance" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </group>
+            <group name="maintenance" position="after">
+                <field name="maintenance_auto_ids" nolabel="1">
+                    <tree editable="bottom">
+                        <field name="maintenance_name_id" required="1"/>
+                        <field name="maintenance_team" required="1"/>
+                        <field name="period"/>
+                        <field name="maintenance_duration"/>
+                        <field name="last_date"/>
+                        <field name="next_due_date"/>
+                        <field name="subcontract"/>
+                        <field name="partner_id" attrs="{'readonly': [('subcontract', '=', False)], 'required': [('subcontract', '=', True)]}"/>
+                        <field name="product_id" attrs="{'readonly': [('subcontract', '=', False)], 'required': [('subcontract', '=', True)]}"/>
+                    </tree>
+                </field>
+            </group>
+        </field>
+    </record>
+
+    <record id="maintenance_auto_form" model="ir.ui.view">
+        <field name="name">maintenance.auto.form</field>
+        <field name="model">maintenance.auto</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="4">
+                        <field name="maintenance_name_id" required="1"/>
+                        <field name="period"/>
+                        <field name="maintenance_duration"/>
+                        <field name="maintenance_team" required="1"/>
+                        <field name="last_date"/>
+                        <field name="next_due_date"/>
+                        <field name="subcontract"/>
+                        <field name="partner_id" attrs="{'readonly': [('subcontract', '=', False)], 'required': [('subcontract', '=', True)]}"/>
+                        <field name="product_id" attrs="{'readonly': [('subcontract', '=', False)], 'required': [('subcontract', '=', True)]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="maintenance_name_tree" model="ir.ui.view">
+        <field name="name">maintenance.name.tree</field>
+        <field name="model">maintenance.name</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="period"/>
+                <field name="maintenance_duration"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="maintenance_name_form" model="ir.ui.view">
+        <field name="name">maintenance.name.form</field>
+        <field name="model">maintenance.name</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="new_request_generator_days"/>
+                    </group>
+                    <group>
+                        <field name="period"/>
+                        <field name="maintenance_duration"/>
+                        <field name="maintenance_team" required="1"/>
+                        <field name="responsible_user" required="1"/> 
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_equipment_action" model="ir.actions.act_window">
+        <field name="name">Maintenance Name</field>
+        <field name="res_model">maintenance.name</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Maintenance Name
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_maintenance_name"
+        name="Maintenance Name"
+        parent="maintenance.menu_maintenance_configuration"
+        action="hr_equipment_action"
+        sequence="0"/>
+
+    <record id="auto_equipment_generator_hr_equipment_request_view_form" model="ir.ui.view">
+        <field name="name">equipment.request.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <field name="equipment_id" position="after">
+                <field name="maintenance_auto_id" domain="[('equipment_id', '=', equipment_id)]"/>
+                <field name="subcontract"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+            </field>
+            <button name="reset_equipment_request" position="after">
+                <button string="Create PO" name="action_create_po" type="object" />
+            </button>
+            <field name="close_date" position="attributes">
+                <attribute name="readonly">0</attribute>
+                <attribute name="groups"></attribute>
+                <attribute name="required">1</attribute>
+            </field>
+            <div class="oe_title" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button type="object"  name="action_view_po"
+                        class="oe_stat_button"
+                        icon="fa-shopping-cart" attrs="{'invisible':[('count_po', '=', 0)]}">
+                        <field name="count_po" widget="statinfo" string="Purchase"/>
+                        <field name='po_ids' invisible="1"/>
+                        <field name='po_line_ids' invisible="1"/>
+                    </button>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <record id="auto_equipment_generator_hr_equipment_request_view_tree" model="ir.ui.view">
+        <field name="name">equipment.request.tree</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="maintenance_auto_id"/>
+                <field name="subcontract"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

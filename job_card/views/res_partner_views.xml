@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="inherit_res_partner" model="ir.ui.view">
+            <field name="name">res.partner.view</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="base.view_partner_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//page[3]//field[@name='property_payment_term_id']" position="after">
+                        <field name="job_card_billing" widget="radio"/>
+                    </xpath>  
+                </field>        
+        </record>
+</odoo>

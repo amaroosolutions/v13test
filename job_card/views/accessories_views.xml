@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_accessories_tree" model="ir.ui.view">
+        <field name="name">accessorie.tree</field>
+        <field name="model">accessories.accessories</field>
+        <field name="arch" type="xml">
+            <tree string="Accessories" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Form View -->
+    <record id="view_accessories_form" model="ir.ui.view">
+        <field name="name">accessories.form</field>
+        <field name="model">accessories.accessories</field>
+        <field name="arch" type="xml">
+            <form string="Accessories">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menu action-->
+    <record id="accessories_action" model="ir.actions.act_window">
+        <field name="name">Accessories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">accessories.accessories</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem id="accessories_sub_menu" parent="job_number_menu" name="Accessories" action="accessories_action" />
+</odoo>
